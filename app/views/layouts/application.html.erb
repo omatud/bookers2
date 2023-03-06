@@ -14,7 +14,7 @@
       <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <div class="container">
-                <%= link_to "Bookers",root_path ,class:"nav-link text-light" %>
+            <a class="navbar-brand" href="/"><span>Bookers</span></a>
             <button class="navbar-toggler">
               <Span class="navbar-toggler-icon"></Span>
             </button>
@@ -22,7 +22,24 @@
               <ul class="navbar-nav ml-auto">
                 <% if user_signed_in? %>
                 <li>
-                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete  %>
+                  <%= link_to user_path(current_user.id) ,class:"nav-link text-light" do %>
+                  <i class="fas fa-home"></i> Home
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to users_path ,class:"nav-link text-light" do %>
+                  <i class="fas fa-users"></i> Users
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to books_path ,class:"nav-link text-light" do %>
+                  <i class="fas fa-book-open"></i> Books
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to  destroy_user_session_path, method: :delete,class:"nav-link text-light" do  %>
+                  <i class="fas fa-sign-out-alt"></i> Log out
+                  <% end %>
                 </li>
                 <% else %>
                 <li>
@@ -31,7 +48,7 @@
                   <% end %>
                 </li>
                 <li>
-                  <%= link_to about_path ,class:"nav-link text-light" do %>
+                  <%= link_to home_about_path ,class:"nav-link text-light" do %>
                   <i class="fas fa-link"></i> About
                   <% end %>
                 </li>
@@ -54,7 +71,13 @@
 
   </header>
 
+  <main>
+    <% flash.each do |message_type, message| %>
+    <%= content_tag :div, message, class: message_type %>
+    <% end %>
     <%= yield %>
+  </main>
+
   <footer>
     <div class="container mt-5">
       <div class="row">
